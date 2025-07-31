@@ -89,118 +89,116 @@
 // });
 
 
-$(document).ready(function () {
-    //console.log("Script loaded!");
-    $.validator.addMethod("requireOneHobby", function (value, element) {
-        return $("input[name='hobbies[]']:checked").length > 0;
-    }, "Please select at least one hobby.");
+$(document).ready(function(){
+    $.validator.addMethod("requiredNumber",function(value,element){
+        return this.optional(element) || /^[6-9]\d{9}$/.test(value);
+    },"mobile number must start with 6,7,8 or 9 and be 10 digits long ");
 
-    // Add custom pattern rule if needed
-    $.validator.addMethod("pattern", function(value, element, param) {
-        if (this.optional(element)) {
-            return true;
-        }
-        return param.test(value);
-    }, "Invalid format.");
+    $.validator.addMethod("requireOneHobby",function(value,element){
+        return $("input[name='hobbies[]']:checked").length>0;
+    },"Please select at least one hobby.");
 
-    function (error, element) {
-    if (element.attr("type") === "checkbox") {
-        
-        error.insertAfter($(element).closest('div').prev('.question'));
-    } else if (element.attr("type") === "radio") {
-        // For radio buttons (gender)
-        error.insertAfter($(element).closest('div').prev('.question'));
-    } else {
-        error.insertAfter(element);
+    $.validator.addMethod("pattern",function(value,element,param){
+        if(this.optional(element)){
+        return true;
     }
-}
-
-    
-
+return param.test(value);
+},"Invalid format.");
     $("#EmpForm").validate({
-        rules: {
-            name: {
-                required: true,
+        rules:{
+            name:{
+                required:true,
                 pattern: /^[a-zA-Z\s]+$/
             },
-            email: {
+            email:{
                 required: true,
                 email: true
             },
-            age: {
-                required: true,
+            age:{
+                required:true,
                 number: true,
-                min: 1
+                min:1
             },
-            password: {
+            password:{
+                required:true,
+                minlength: 6,
+                
+            },
+            mobile:{
                 required: true,
-                minlength: 6
+                digits:true,
+                minlength:10,
+                maxlength:10,
+                requiredNumber: true
             },
-            mobile: {
-                required: true,
-                digits: true,
-                minlength: 10,
-                maxlength: 10
+            gender:{
+                required:true
             },
-            gender: {
-                required: true
+            designation:{
+                required:true
             },
-            designation: {
-                required: true
+            position:{
+                required:true
             },
-            position: {
-                required: true
+            employee:{
+                required:true
             },
-            employee: {
-                required: true
-            },
-            'hobbies[]': {
+            'hobbies[]':{
                 requireOneHobby: true,
                 required: true,
-                minlength: 1
             }
         },
-        messages: {
-            name: {
-                required: "Please enter your name",
-                pattern: "Only letters and spaces are allowed"
+        messages:{
+            name:{
+                required:"Please enter your name",
+                pattern:"Only letters and spaces are allowed"
             },
-            email: {
-                required: "Please enter your email address",
-                email: "Please enter a valid email address"
+            email:{
+                required:"Please enter your email address",
+                email: "Please neter a valid email address"
             },
-            age: {
+            age:{
                 required: "Please enter your age",
-                number: "Please enter a valid number",
-                min: "Age must be at least 1"
+                Number: "Please enter a valid number",
+                min:"Age must at least 1"
             },
-            password: {
-                required: "Please enter your password",
-                minlength: "Password must be at least 6 characters long"
+            password:{
+                required:"Please enter your password",
+                minlength:"Password must be at least 6 characters"
             },
-            mobile: {
+            mobile:{
                 required: "Please enter your mobile number",
                 digits: "Only digits are allowed",
                 minlength: "Mobile number must be exactly 10 digits",
-                maxlength: "Mobile number must be exactly 10 digits"
+                maxlength: "Mobile number must be exactly 10 digits",
+                requiredNumber:"Mobile number start with 6,7,8 or 9"
             },
-            gender: {
+            gender:{
                 required: "Please select your gender"
             },
-            designation: {
+            designation:{
                 required: "Please select designation"
             },
-            position: {
-                required: "Please select position"
+            position:{
+                required:"Please select position"
             },
-            employee: {
-                required: "Please select employee role"
+            employee:{
+                required:"Please select employee role"
             },
-            'hobbies[]': {
-                requireOneHobby: "Please select at least one hobby."
+            'hobbies[]':{
+                requireOneHobby:"Please select at least one hobby"
             }
         },
-        
-        
+        errorPlacement: function(error,element){
+            if(element.attr("type")==="checkbox"){
+                error.insertAfter(element.closest('div.hobbies-group'));
+            }else if(element.attr("type")==="radio"){
+                error.insertAfter(element.closest('div.gender-group'));
+            }else if(element.is("select")){
+                error.insertAfter(element);
+            }else{
+                error.insertAfter(element);
+            }
+            }
     });
 });

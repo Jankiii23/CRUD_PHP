@@ -199,11 +199,13 @@
         ?><br>
 
         <!-- Gender -->
-        Gender:
+        <div class="question">Gender:</div>
+        <div class="gender-group">
         <label for="male" >Male</label>
         <input type="radio" name="gender" id="male"  value="male"<?php echo($gender == 'male') ? 'checked' : ''; ?>>
         <label for="female">Female</label>
         <input type="radio" name="gender" id="female" value="female" <?php echo($gender == 'female') ? 'checked' : ''; ?>><br>
+         </div>
         <?php if ($genderErr) {
                 echo '<div class="error">' . $genderErr . '</div>';
         }
@@ -245,16 +247,18 @@
         <?php if ($employeeErr) {
                 echo '<div class="error">' . $employeeErr . '</div>';
         }
-        ?><br>
+        ?>
 
         <!-- Hobbies -->
-        Hobbies: <br>
+        <div class="question">Hobbies:</div> <br>
+        <div class="hobbies-group">
         <label for="reading">Reading</label>
         <input type="checkbox" name="hobbies[]" id="reading" value="Reading"                                                     <?php echo(strpos($hobbies, 'Reading') !== false) ? 'checked' : ''; ?>><br>
         <label for="travelling">Travelling</label>
         <input type="checkbox" name="hobbies[]" id="travelling" value="Travelling"                                               <?php echo(strpos($hobbies, 'Travelling') !== false) ? 'checked' : ''; ?>><br>
         <label for="sports">Sports</label>
         <input type="checkbox" name="hobbies[]" id="sports" value="Sports"                                                        <?php echo(strpos($hobbies, 'Sports') !== false) ? 'checked' : ''; ?>><br>
+    </div>
 
         <?php if ($hobbiesErr) {
                 echo '<div class="error">' . $hobbiesErr . '</div>';
