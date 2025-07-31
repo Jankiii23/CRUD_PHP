@@ -152,51 +152,65 @@
             font-size: 12px;
             margin-top: 5px;
         }
+        select.error{
+            color:initial;
+        }
     </style>
 
 
 </head>
 <body>
     <h2><?php echo isset($_GET['id']) ? "Edit" : "Add New" ?> User</h2>
-    <form action="addUpdate.php" method="POST" id="EmpForm">
+    <form action="addUpdate.php" method="POST" id="EmpForm" enctype="multipart/form-data">
         <?php if (isset($_GET['id'])): ?>
             <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>">
         <?php endif; ?>
 
         <!-- Name -->
-        Name: <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($name) ?>"><br>
-        <?php if ($nameErr) {
-                echo '<div class="error">' . $nameErr . '</div>';
-        }
-        ?><br>
+        <div class="form-group">
+            <label for="name">Name</label> 
+            <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($name) ?>"></div><br>
+            <?php if ($nameErr) {
+                    echo '<div class="error">' . $nameErr . '</div>';
+                }
+        ?>
+       
 
         <!-- Email -->
-        Email: <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($email) ?>"><br>
+         <div>
+        <label for="email">Email:</label>
+         <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($email) ?>"><br>
         <?php if ($emailErr) {
                 echo '<div class="error">' . $emailErr . '</div>';
         }
-        ?><br>
+        ?></div><br>
 
         <!-- Age -->
-        Age: <input type="number" name="age" id="age" value="<?php echo htmlspecialchars($age) ?>"><br>
+         <div>
+        <label for="age">Age:</label>
+        <input type="number" name="age" id="age" value="<?php echo htmlspecialchars($age) ?>"><br>
         <?php if ($ageErr) {
                 echo '<div class="error">' . $ageErr . '</div>';
         }
-        ?><br>
+        ?></div><br>
 
         <!-- Password -->
-        Password: <input type="password" name="password" id="password" value="<?php echo htmlspecialchars($password) ?>"><br>
+         <div>
+        <label for="password">Password:</label>
+         <input type="password" name="password" id="password" value="<?php echo htmlspecialchars($password) ?>"><br>
         <?php if ($passwordErr) {
                 echo '<div class="error">' . $passwordErr . '</div>';
         }
-        ?><br>
+        ?></div><br>
 
         <!-- Mobile -->
-        Mobile No: <input type="text" name="mobile" id="mobile" value="<?php echo htmlspecialchars($mobile) ?>"><br>
+        <div>
+            <label for="mobile">Mobile No:</label>
+             <input type="text" name="mobile" id="mobile" value="<?php echo htmlspecialchars($mobile) ?>"><br>
         <?php if ($mobileErr) {
                 echo '<div class="error">' . $mobileErr . '</div>';
         }
-        ?><br>
+        ?></div><br>
 
         <!-- Gender -->
         <div class="question">Gender:</div>
@@ -204,7 +218,7 @@
         <label for="male" >Male</label>
         <input type="radio" name="gender" id="male"  value="male"<?php echo($gender == 'male') ? 'checked' : ''; ?>>
         <label for="female">Female</label>
-        <input type="radio" name="gender" id="female" value="female" <?php echo($gender == 'female') ? 'checked' : ''; ?>><br>
+        <input type="radio" name="gender" id="female" value="female"<?php echo($gender == 'female') ? 'checked' : ''; ?>><br>
          </div>
         <?php if ($genderErr) {
                 echo '<div class="error">' . $genderErr . '</div>';
@@ -212,7 +226,8 @@
         ?><br>
 
         <!-- Designation -->
-        Designation:
+        <div>
+            <label for="designation">Designation:</label>
         <select name="designation" id="designation">
             <option value="">Select Designation</option>
             <?php
@@ -226,7 +241,7 @@
           <?php if ($designationErr) {
                   echo '<div class="error">' . $designationErr . '</div>';
           }
-          ?><br>
+          ?></div><br>
 
         <!-- Position -->
         Position:
@@ -247,23 +262,25 @@
         <?php if ($employeeErr) {
                 echo '<div class="error">' . $employeeErr . '</div>';
         }
-        ?>
+        ?><br>
 
         <!-- Hobbies -->
-        <div class="question">Hobbies:</div> <br>
+        <div class="question">Hobbies:</div>
         <div class="hobbies-group">
         <label for="reading">Reading</label>
-        <input type="checkbox" name="hobbies[]" id="reading" value="Reading"                                                     <?php echo(strpos($hobbies, 'Reading') !== false) ? 'checked' : ''; ?>><br>
+        <input type="checkbox" name="hobbies[]" id="reading" value="Reading"                                                                                                                                                                                                                                                                                         <?php echo(strpos($hobbies, 'Reading') !== false) ? 'checked' : ''; ?>><br>
         <label for="travelling">Travelling</label>
-        <input type="checkbox" name="hobbies[]" id="travelling" value="Travelling"                                               <?php echo(strpos($hobbies, 'Travelling') !== false) ? 'checked' : ''; ?>><br>
+        <input type="checkbox" name="hobbies[]" id="travelling" value="Travelling"                                                                                                                                                                                                                                                                                                     <?php echo(strpos($hobbies, 'Travelling') !== false) ? 'checked' : ''; ?>><br>
         <label for="sports">Sports</label>
-        <input type="checkbox" name="hobbies[]" id="sports" value="Sports"                                                        <?php echo(strpos($hobbies, 'Sports') !== false) ? 'checked' : ''; ?>><br>
+        <input type="checkbox" name="hobbies[]" id="sports" value="Sports"                                                                                                                                                                                                                                                                                      <?php echo(strpos($hobbies, 'Sports') !== false) ? 'checked' : ''; ?>><br>
     </div>
 
         <?php if ($hobbiesErr) {
                 echo '<div class="error">' . $hobbiesErr . '</div>';
         }
         ?><br>
+
+       
 
         <input type="submit" value="<?php echo isset($_GET['id']) ? 'Update' : 'Add' ?>">
     </form>

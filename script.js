@@ -105,6 +105,7 @@ $(document).ready(function(){
 return param.test(value);
 },"Invalid format.");
     $("#EmpForm").validate({
+        errorElement: "div",
         rules:{
             name:{
                 required:true,
@@ -121,8 +122,7 @@ return param.test(value);
             },
             password:{
                 required:true,
-                minlength: 6,
-                
+                minlength: 6
             },
             mobile:{
                 required: true,
@@ -155,7 +155,7 @@ return param.test(value);
             },
             email:{
                 required:"Please enter your email address",
-                email: "Please neter a valid email address"
+                email: "Please enter a valid email address"
             },
             age:{
                 required: "Please enter your age",
