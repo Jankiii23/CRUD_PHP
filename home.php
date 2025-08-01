@@ -7,11 +7,11 @@
     if ($conn->connect_error) {
         die("Connection failed" . $conn->connect_error);
     }
-    $result = $conn->query(" SELECT data.*,designation.dg_name,  position.ps_name, employee.emp_name
-FROM data
-JOIN designation ON data.designation = designation.dg_id
-JOIN position ON data.position = position.ps_id
-JOIN employee ON data.employee = employee.id");
+    $result = $conn->query("SELECT data.*, designation.dg_name,  position.ps_name, employee.emp_name
+    FROM data
+    JOIN designation ON data.designation = designation.dg_id
+    JOIN position ON data.position = position.ps_id
+    JOIN employee ON data.employee = employee.id");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +40,7 @@ JOIN employee ON data.employee = employee.id");
             </th><th>Designation</th><th>Position</th><th>Employee</th><th>Hobbies</th><th>Date & Time</th>
         </tr>
 <?php while ($row = $result->fetch_assoc()) {?>
+    
 <tr>
     <td><?php echo $row['id']?></td>
     <td><?php echo $row['name']?></td>
@@ -56,7 +57,7 @@ JOIN employee ON data.employee = employee.id");
     <!-- </td><td> <button class='btn btn-warning btn-sm btn-edit'>Edit</button><button class='btn btn-danger btn-sm btn-edit'>Delete</button></td> -->
     <td>
         <a href="addUpdate.php?id=<?php echo $row['id']?>">Edit</a>
-        <a href="delete.php?id=<?php echo $row['id']?>"onclick="return confirm('Are you sure?')">Delete</a>
+        <a href="delete.php?id=<?php echo $row['id']?>" onclick="return confirm('Are you sure?')">Delete</a>
 </td>
 
 </tr>

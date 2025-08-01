@@ -32,7 +32,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['id'])) {
-            $id     = (int) $_POST['id'];
+            $id     = $_POST['id'];
             $update = true;
         } else {
             $update = false;
@@ -51,8 +51,7 @@
         } else {
             $email = $_POST['email'];
         }
-
-        if (empty($_POST['age']) || ! is_numeric($_POST['age']) || $_POST['age'] <= 0) {
+        if (empty($_POST['age']) || ! is_numeric($_POST['age']) || $_POST['age'] < 0) {
             $ageErr  = "Please enter a valid age.";
             $isValid = false;
         } else {
@@ -176,7 +175,7 @@
             ?>
 
 
-        <!-- Email -->
+        <!-- Email -->  
          <div>
         <label for="email">Email:</label>
          <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($email) ?>"><br>

@@ -199,6 +199,6 @@ return param.test(value);
             }else{
                 error.insertAfter(element);
             }
-            }
+        }
     });
 });
