@@ -168,13 +168,13 @@
 
         <!-- Name -->
         <div class="form-group">
-            <label for="name">Name</label> 
+            <label for="name">Name</label>
             <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($name) ?>"></div><br>
             <?php if ($nameErr) {
                     echo '<div class="error">' . $nameErr . '</div>';
                 }
-        ?>
-       
+            ?>
+
 
         <!-- Email -->
          <div>
@@ -231,10 +231,13 @@
         <select name="designation" id="designation">
             <option value="">Select Designation</option>
             <?php
-                $conn   = new mysqli("localhost", "root", "", "database");
+                //$conn   = new mysqli("localhost", "root", "", "database");
                 $result = $conn->query("SELECT * FROM `designation`");
+                // echo '<pre>'; print_r($result->fetch_assoc()); exit;
                 while ($row = $result->fetch_assoc()) {
-                    echo "<option value='{$row['dg_id']}'>{$row['dg_name']}</option>";
+                    $selected = ($designation == $row['dg_id']) ? 'selected' : '';
+                    echo "<option value='" . $row['dg_id'] . "' $selected>" . $row['dg_name'] . "</option>";
+
                 }
             ?>
            </select><br>
@@ -247,17 +250,35 @@
         Position:
         <select name="position" id="position">
             <option value="">Select Position</option>
+            <?php
+                if (isset($designation) && ! empty($designation) && isset($position) && ! empty($position)) {
+                    //$conn   = new mysqli("localhost", "root", "", "database");
+                    $result = $conn->query("SELECT * FROM `position` WHERE `dg_id` = $designation");
+                    while ($row = $result->fetch_assoc()) {
+                        $selected = ($position == $row['ps_id']) ? 'selected' : '';
+                        echo "<option value='" . $row['ps_id'] . "' $selected>" . $row['ps_name'] . "</option>";
 
+                    }
+                }
+            ?>
         </select><br>
         <?php if ($positionErr) {
                 echo '<div class="error">' . $positionErr . '</div>';
         }
         ?><br>
-
-
         Employee Role:
         <select name="employee" id="employee">
             <option value="">select employee</option>
+            <?php
+            if(isset($position) && !empty($position) && isset($employee) && !empty($employee)){
+                //$conn=new mysqli("localhost","root","","database");
+                $result=$conn->query("SELECT * FROM `employee` WHERE `ps_id` = $position");
+                while($row=$result->fetch_assoc()){
+                    $selected=($employee==$row['id']) ? 'selected' : '';
+                    echo "<option value='" . $row['id'] . "' $selected>" . $row['emp_name'] . "</option>";
+                }
+            }
+            ?>
             </select><br>
         <?php if ($employeeErr) {
                 echo '<div class="error">' . $employeeErr . '</div>';
@@ -268,11 +289,11 @@
         <div class="question">Hobbies:</div>
         <div class="hobbies-group">
         <label for="reading">Reading</label>
-        <input type="checkbox" name="hobbies[]" id="reading" value="Reading"                                                                                                                                                                                                                                                                                         <?php echo(strpos($hobbies, 'Reading') !== false) ? 'checked' : ''; ?>><br>
+        <input type="checkbox" name="hobbies[]" id="reading" value="Reading"                                                                                                                                                                                                                                                                                                                                                                     <?php echo(strpos($hobbies, 'Reading') !== false) ? 'checked' : ''; ?>><br>
         <label for="travelling">Travelling</label>
-        <input type="checkbox" name="hobbies[]" id="travelling" value="Travelling"                                                                                                                                                                                                                                                                                                     <?php echo(strpos($hobbies, 'Travelling') !== false) ? 'checked' : ''; ?>><br>
+        <input type="checkbox" name="hobbies[]" id="travelling" value="Travelling"                                                                                                                                                                                                                                                                                                                                                                                       <?php echo(strpos($hobbies, 'Travelling') !== false) ? 'checked' : ''; ?>><br>
         <label for="sports">Sports</label>
-        <input type="checkbox" name="hobbies[]" id="sports" value="Sports"                                                                                                                                                                                                                                                                                      <?php echo(strpos($hobbies, 'Sports') !== false) ? 'checked' : ''; ?>><br>
+        <input type="checkbox" name="hobbies[]" id="sports" value="Sports"                                                                                                                                                                                                                                                                                                                                                                <?php echo(strpos($hobbies, 'Sports') !== false) ? 'checked' : ''; ?>><br>
     </div>
 
         <?php if ($hobbiesErr) {
@@ -280,7 +301,7 @@
         }
         ?><br>
 
-       
+
 
         <input type="submit" value="<?php echo isset($_GET['id']) ? 'Update' : 'Add' ?>">
     </form>
